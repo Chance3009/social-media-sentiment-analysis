@@ -7,7 +7,7 @@ This project conducts sentiment analysis on social media posts, providing insigh
 To run the web app on your local computer, install the required libraries. These packages are include in the requirement.txt file. Run the following command in the terminal to install the required packages.<br><br>
 
 ```
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 <br>
 
