@@ -5,13 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Sentiment Analysis Dashboard</title>
+    <style>
+        body {
+            background-color: whitesmoke;
+        }
+
+        .container {
+            max-width: 600px; /* Set a maximum width for better readability */
+        }
+
+        .form-container {
+            background-color: #ffffff; /* White background for the form */
+            padding: 20px;
+            border-radius: 10px; /* Add some rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+            margin-top: 50px; /* Adjust the top margin */
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .content h2 {
+            color: #007bff; 
+        }
+   </style>
 </head>
 <body>
-    <h1>Welcome to the Sentiment Analysis Dashboard!</h1>
-    <form action="/analyze" method="post">
-        <label for="hashtag">Enter a hashtag:</label>
-        <input type="text" name="hashtag" required>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="container mt-5">
+        <h1 class="text-center">Welcome to Social Media Sentiment Analysis Dashboard!</h1>
+        <div class="form-container">
+            <form action="/analyze" method="post" class="mt-4">
+                <div class="form-group">
+                    <label for="hashtag">Enter Hashtag:</label>
+                    <input type="text" class="form-control" id="hashtag" name="hashtag" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    <div class="content">
+        <h2>Why Use This Dashboard?</h2>
+        <p>Gain insights into social media sentiments related to specific hashtags. Understand the sentiment distribution, average likes, and average retweets for posts with your chosen hashtag.</p>
+        <p>Make informed decisions based on the sentiment analysis results.</p>
+    </div>    
 </body>
 </html>

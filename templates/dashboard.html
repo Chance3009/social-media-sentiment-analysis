@@ -4,69 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentiment Analysis Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            background-color: whitesmoke;
         }
-        h1 {
-            color: #333;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            display: inline-block;
-            margin-right: 20px;
-        }
-        .sentiment-info {
-            margin-bottom: 20px;
-        }
+
         .chart-container {
-            max-width: 600px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            margin: 25px;
         }
     </style>
-    </head>
+</head>
 <body>
-    <h1>Sentiment Analysis Results for #{{ hashtag }}</h1>
+    <h1 class="mt-4 text-center">Sentiment Analysis Results for #{{ hashtag }}</h1>
+    <p class="lead text-center">Average likes per post: {{ average_likes }}</p>
+    <p class="lead text-center">Average retweets per post: {{ average_retweets }}</p>
     
-    <!-- Sentiment Information -->
-    <div class="sentiment-info">
-        <ul>
-            <li>Positive: {{ sentiment_counts.get('Positive', 0) }}</li>
-            <li>Negative: {{ sentiment_counts.get('Negative', 0) }}</li>
-            <li>Neutral: {{ sentiment_counts.get('Neutral', 0) }}</li>
-        </ul>
+    <!-- Sentiment Distribution Bar Chart -->
+    <div class="chart-container" id="sentiment-chart"></div>
+
+    <!-- Country Distribution Stacked Bar Chart -->
+    <div class="chart-container" id="country-chart"></div>
+    <div class="text-center">
+        <a href="/" class="btn btn-primary mt-3">Go back to home</a>
     </div>
-
-    <!-- Chart Container -->
-    <div class="chart-container" id="plotly-chart"></div>
-
-    <a href="/">Go back to home</a>
 
     <script>
         // Sentiment counts from Flask
         var sentimentCounts = {
-            'Positive': "{{ sentiment_counts.get('Positive', 0) }}",
-            'Negative': "{{ sentiment_counts.get('Negative', 0) }}",
-            'Neutral': "{{ sentiment_counts.get('Neutral', 0) }}"
+            'positive': "{{ sentiment_counts.get('positive', 0) }}",
+            'negative': "{{ sentiment_counts.get('negative', 0) }}",
+            'neutral': "{{ sentiment_counts.get('neutral', 0) }}"
         };
 
-        // Create a pie chart using Plotly
-        var data = [{
+        // Country distribution from Flask
+        var countryDistribution = JSON.parse('{{ country_distribution | tojson | safe }}');
+
+        // Create a bar chart for sentiment distribution using Plotly
+        var sentimentData = [{
             type: 'pie',
             labels: Object.keys(sentimentCounts),
             values: Object.values(sentimentCounts),
-            marker: { colors: ['green', 'red', 'blue'] }
+            marker: { colors: ['limegreen', 'tomato', 'silver'] }
         }];
 
-        var layout = {
+        var sentimentLayout = {
             title: 'Sentiment Distribution',
         };
 
-        Plotly.newPlot('plotly-chart', data, layout);
+        Plotly.newPlot('sentiment-chart', sentimentData, sentimentLayout);
+
+        // Create a stacked bar chart for country distribution using Plotly
+        var sentiments = ['neutral', 'negative', 'positive'];
+        var colors = {
+            'negative': 'tomato',
+            'neutral': 'silver',
+            'positive': 'limegreen'
+        };
+
+    // Initialize an empty array to store data objects
+    var data = [];
+
+    // Iterate over sentiments
+    for (var i = 0; i < sentiments.length; i++) {
+        var sentiment = sentiments[i];
+
+        var currData = {
+            x: Object.keys(countryDistribution),
+            y: Object.values(countryDistribution).map(country => country[sentiment]),
+            type: 'bar',
+            name: sentiment, 
+            marker: {color: colors[sentiment]}
+        };
+
+        data.push(currData);
+    }
+
+    var layout = {
+        title: 'Sentiment Distribution by Country',
+        barmode: 'stack'
+    };
+
+        Plotly.newPlot('country-chart', data, layout);
     </script>
 </body>
 </html>
