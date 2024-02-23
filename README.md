@@ -18,6 +18,6 @@ To run the code on your computer, , use the following command in the terminal:<b
 python app.py
 ```
 <br>
-Visit [http://localhost:5000](Visit http://localhost:5000) in your web browser to access the sentiment analysis dashboard.
+Visit [http://localhost:5000](http://localhost:5000) in your web browser to access the sentiment analysis dashboard.
 
 ### Thank you
