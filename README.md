@@ -9,7 +9,6 @@ To run the web app on your local computer, install the required libraries. These
 ```
 pip install -r requirements.txt
 ```
-<br>
 
 ## Getting Started
 
@@ -20,5 +19,16 @@ python app.py
 <br>
 
 Visit http://localhost:5000 in your web browser to access the sentiment analysis dashboard.
+
+<br>
+
+## Preview
+
+<img src="https://github.com/Chance3009/social-media-sentiment-analysis/blob/master/home_preview.png"></img>
+<br>
+ 
+<img src="https://github.com/Chance3009/social-media-sentiment-analysis/blob/master/dashboard_preview.png"></img>
+<br>
+<br> 
 
 ### Thank you
